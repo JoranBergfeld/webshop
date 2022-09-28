@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: stock-app
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        acks: 1
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.BytesDeserializer
+      group-id: ${spring.application.name}
+
+server:
+  port: 15002
+
+stock-app:
+  events:
+    order-submitted-topic: order-submitted
+    stock-updated-topic: stock-updated
+    item-created-topic: item-created
+    item-updated-topic: item-updated
+    item-deleted-topic: item-deleted
+
+
