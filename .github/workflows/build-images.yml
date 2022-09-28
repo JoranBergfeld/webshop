@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup maven
-        uses: s4u/setup-maven-action@1.5.0
+        uses: s4u/setup-maven-action@v1.5.0
         with:
           java-version: 17
           
