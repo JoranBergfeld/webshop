@@ -11,6 +11,10 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.BytesDeserializer
       group-id: ${spring.application.name}
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      ssl.endpoint.identification.algorithm: https
 
 server:
   port: 15002
