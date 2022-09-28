@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: plane-registry
-  name: plane-registry
+    app: stock-app
+  name: stock-app
 spec:
   ports:
     - name: 15002-tcp
@@ -11,6 +11,6 @@ spec:
       protocol: TCP
       targetPort: 15002
   selector:
-    app: plane-registry
+    app: stock-app
   sessionAffinity: None
   type: ClusterIP
