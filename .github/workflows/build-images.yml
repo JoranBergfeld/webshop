@@ -40,4 +40,4 @@ jobs:
           images: ${{ matrix.image }}
 
       - name: Build and push container images
-        run: cd ${{ matrix.path }} && mvn -DskipTests spring-boot:build-image
+        run: "cd ${{ matrix.path }} && mvn -Dmaven.test.skip=true spring-boot:build-image"
