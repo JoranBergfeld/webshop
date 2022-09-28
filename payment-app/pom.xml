@@ -108,6 +108,12 @@
 						<name>ghcr.io/joranbergfeld/webshop/${project.artifactId}</name>
 						<publish>true</publish>
 					</image>
+					<docker>
+						<publishRegistry>
+							<username>${env.REGISTRY_USER}</username>
+							<password>${env.REGISTRY_PASSWORD}</password>
+						</publishRegistry>
+					</docker>
 				</configuration>
 			</plugin>
 		</plugins>
