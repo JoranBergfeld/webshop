@@ -21,6 +21,9 @@ spec:
             - containerPort: 15000
               protocol: TCP
           resources: { }
+          envFrom:
+            - secretRef:
+                name: kafka-credentials
   strategy:
     type: RollingUpdate
     rollingUpdate:
