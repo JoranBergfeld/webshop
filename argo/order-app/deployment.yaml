@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: order-app
+  labels:
+    app: order-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-app
+  template:
+    metadata:
+      labels:
+        app: order-app
+    spec:
+      containers:
+        - name: order-app
+          image: ghcr.io/joranbergfeld/webshop/order-app:latest
+          ports:
+            - containerPort: 15000
+              protocol: TCP
+          resources: { }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%

@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: order-app
+  name: order-app
+spec:
+  port:
+    targetPort: 15000-tcp
+  to:
+    kind: Service
+    name: order-app
+    weight: 100

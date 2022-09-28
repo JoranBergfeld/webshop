@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: stock-app
+  name: stock-app
+spec:
+  port:
+    targetPort: 15002-tcp
+  to:
+    kind: Service
+    name: stock-app
+    weight: 100
