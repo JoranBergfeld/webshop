@@ -23,12 +23,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4.0.1
-        with:
-          images: ${{ matrix.image }}
-
       - name: Build and push order app container
         run: cd ./order-app && mvn -DskipTests spring-boot:build-image
       - name: Build and push payment app container
