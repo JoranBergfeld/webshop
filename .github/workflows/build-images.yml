@@ -8,16 +8,6 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - path: ./order-app
-            image: ghcr.io/joranbergfeld/webshop/order-app
-          - dockerfile: ./payment-app
-            image: ghcr.io/joranbergfeld/webshop/payment-app
-          - path: ./order-app
-            image: ghcr.io/joranbergfeld/webshop/order-app
     permissions:
       contents: read
       packages: write
@@ -39,5 +29,9 @@ jobs:
         with:
           images: ${{ matrix.image }}
 
-      - name: Build and push container images
-        run: "cd ${{ matrix.path }} && mvn -Dmaven.test.skip=true spring-boot:build-image"
+      - name: Build and push order app container
+        run: cd ./order-app && mvn -DskipTests spring-boot:build-image
+      - name: Build and push payment app container
+        run: cd ./payment-app && mvn -DskipTests spring-boot:build-image
+      - name: Build and push stock app container
+        run: cd ./stock-app && mvn -DskipTests spring-boot:build-image
