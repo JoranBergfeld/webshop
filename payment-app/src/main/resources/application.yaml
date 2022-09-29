@@ -16,7 +16,6 @@ spring:
       sasl.mechanism: PLAIN
       ssl.endpoint.identification.algorithm: https
 
-
 server:
   port: 15001
 
@@ -24,4 +23,4 @@ payment-app:
   events:
     payment-updated-topic: payment-updated
     order-submitted-topic: order-submitted
-
+    order-failed-topic: order-failed

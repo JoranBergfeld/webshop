@@ -1,5 +1,6 @@
 package com.joranbergfeld.webshop.paymentapp;
 
+import com.joranbergfeld.webshop.paymentapp.event.OrderFailedEvent;
 import com.joranbergfeld.webshop.paymentapp.event.OrderSubmittedEvent;
 import com.joranbergfeld.webshop.paymentapp.event.PaymentUpdatedEvent;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -31,6 +33,17 @@ public class OrderUpdateConsumer {
         int sleepMultiplier = generateRandomNumberAndSleep();
         persistPayment(orderId);
         publishPaymentUpdatedEvent(orderId, sleepMultiplier);
+    }
+
+    @KafkaListener(topics = "${payment-app.events.order-submitted-topic}")
+    public void orderFailedEventFired(OrderFailedEvent event) {
+        Optional<PaymentEntity> byOrderId = repository.findByOrderId(event.orderId());
+        if (byOrderId.isEmpty()) {
+            log.warn("Got event that order with id {} failed, but couldn't find it.", event.orderId());
+            return;
+        }
+
+        repository.deleteById(byOrderId.get().getId());
     }
 
     private void persistPayment(String orderId) {

@@ -16,13 +16,13 @@ spring:
       sasl.mechanism: PLAIN
       ssl.endpoint.identification.algorithm: https
 
-
 server:
   port: 15000
 
 order-app:
   events:
     order-submitted-topic: order-submitted
+    order-failed-topic: order-failed
     payment-updated-topic: payment-updated
     stock-updated-topic: stock-updated
     item-created-topic: item-created

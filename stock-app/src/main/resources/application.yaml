@@ -22,6 +22,7 @@ server:
 stock-app:
   events:
     order-submitted-topic: order-submitted
+    order-failed-topic: order-failed
     stock-updated-topic: stock-updated
     item-created-topic: item-created
     item-updated-topic: item-updated

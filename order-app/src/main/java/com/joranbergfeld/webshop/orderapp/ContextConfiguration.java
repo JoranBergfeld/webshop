@@ -8,6 +8,7 @@ import com.joranbergfeld.webshop.orderapp.order.OrderStateManager;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 
 @Configuration
@@ -40,8 +41,13 @@ public class ContextConfiguration {
     }
 
     @Bean
-    OrderStateManager orderStateManager(OrderRepository repository, EventKeyRepository eventKeyRepository) {
-        return new OrderStateManager(repository, eventKeyRepository);
+    NewTopic orderFailedTopic() {
+        return new NewTopic(topicConfiguration.orderFailedTopic(), 1, (short) 1);
+    }
+
+    @Bean
+    OrderStateManager orderStateManager(OrderRepository repository, EventKeyRepository eventKeyRepository, KafkaTemplate<String, Object> kafkaTemplate) {
+        return new OrderStateManager(repository, eventKeyRepository, kafkaTemplate, topicConfiguration);
     }
 
     @Bean

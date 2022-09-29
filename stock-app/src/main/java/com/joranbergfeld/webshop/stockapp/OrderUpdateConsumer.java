@@ -1,5 +1,6 @@
 package com.joranbergfeld.webshop.stockapp;
 
+import com.joranbergfeld.webshop.stockapp.event.OrderFailedEvent;
 import com.joranbergfeld.webshop.stockapp.event.OrderSubmittedEvent;
 import com.joranbergfeld.webshop.stockapp.event.StockUpdatedEvent;
 import org.slf4j.Logger;
@@ -7,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+
+import java.util.Optional;
 
 public class OrderUpdateConsumer {
 
@@ -37,6 +40,19 @@ public class OrderUpdateConsumer {
             publishStockUpdateSuccessful(itemId, orderId);
         }
 
+    }
+
+    @KafkaListener(topics = "${stock-app.events.order-failed-topic}")
+    public void orderFailedEvent(OrderFailedEvent event) {
+        Optional<StockEntity> byItemId = repository.findByItemId(event.itemId());
+        if (byItemId.isEmpty()) {
+            log.warn("Got order failed event for item with id {}, but couldn't find it.", event.itemId());
+            return;
+        }
+
+        StockEntity stock = byItemId.get();
+        stock.setAmount(stock.getAmount() + event.amount());
+        repository.save(stock);
     }
 
     private void updateStock(int amountFromOrder, StockEntity item) {
