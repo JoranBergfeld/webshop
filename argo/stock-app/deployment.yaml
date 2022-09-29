@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: stock-app
-          image: ghcr.io/joranbergfeld/webshop/stock-app:latest
+          image: ghcr.io/joranbergfeld/webshop/stock-app:idempotency
           ports:
             - containerPort: 15002
               protocol: TCP

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: payment-app
-          image: ghcr.io/joranbergfeld/webshop/payment-app:latest
+          image: ghcr.io/joranbergfeld/webshop/payment-app:idempotency
           ports:
             - containerPort: 15001
               protocol: TCP
