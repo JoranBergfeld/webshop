@@ -1,10 +1,15 @@
 package com.joranbergfeld.webshop.orderapp.order;
 
+import com.joranbergfeld.webshop.orderapp.eventstore.EventKeyEntity;
+import com.joranbergfeld.webshop.orderapp.eventstore.EventKeyRepository;
 import com.joranbergfeld.webshop.orderapp.order.event.PaymentUpdatedEvent;
 import com.joranbergfeld.webshop.orderapp.order.event.StockUpdatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
 
 import java.util.Optional;
 
@@ -12,13 +17,24 @@ public class OrderStateManager {
 
     private final OrderRepository repository;
     private final Logger log = LoggerFactory.getLogger(OrderStateManager.class);
+    private final EventKeyRepository eventKeyRepository;
 
-    public OrderStateManager(OrderRepository repository) {
+    public OrderStateManager(OrderRepository repository, EventKeyRepository eventKeyRepository) {
         this.repository = repository;
+        this.eventKeyRepository = eventKeyRepository;
     }
 
     @KafkaListener(topics = "${order-app.events.payment-updated-topic}")
-    void listenForPaymentUpdates(PaymentUpdatedEvent event) {
+    void listenForPaymentUpdates(@Payload PaymentUpdatedEvent event, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
+        // check for key duplication
+        if (eventKeyRepository.findByEventKey(key).isPresent()) {
+            log.warn("Duplicate received! Not processing.");
+            return;
+        } else {
+            log.info("Duplicate check finalized. Did not find the key before, proceeding..");
+            eventKeyRepository.save(new EventKeyEntity(key));
+        }
+
         final String orderId = event.orderId();
         log.debug("Received payment update about order {}. It indicates processing has successfully processed: {}", orderId, event.successful());
         OrderEntity entity = getOrderEntity(orderId);

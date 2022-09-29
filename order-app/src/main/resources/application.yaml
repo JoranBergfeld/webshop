@@ -16,6 +16,7 @@ spring:
       sasl.mechanism: PLAIN
       ssl.endpoint.identification.algorithm: https
 
+
 server:
   port: 15000
 

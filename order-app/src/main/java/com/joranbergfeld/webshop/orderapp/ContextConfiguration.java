@@ -2,6 +2,7 @@ package com.joranbergfeld.webshop.orderapp;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joranbergfeld.webshop.orderapp.eventstore.EventKeyRepository;
 import com.joranbergfeld.webshop.orderapp.order.OrderRepository;
 import com.joranbergfeld.webshop.orderapp.order.OrderStateManager;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -39,8 +40,8 @@ public class ContextConfiguration {
     }
 
     @Bean
-    OrderStateManager orderStateManager(OrderRepository repository) {
-        return new OrderStateManager(repository);
+    OrderStateManager orderStateManager(OrderRepository repository, EventKeyRepository eventKeyRepository) {
+        return new OrderStateManager(repository, eventKeyRepository);
     }
 
     @Bean

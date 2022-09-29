@@ -106,7 +106,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>ghcr.io/joranbergfeld/webshop/${project.artifactId}:idempotency</name>
+                        <name>ghcr.io/joranbergfeld/webshop/${project.artifactId}:idempotency-final</name>
                         <publish>true</publish>
                     </image>
                     <docker>

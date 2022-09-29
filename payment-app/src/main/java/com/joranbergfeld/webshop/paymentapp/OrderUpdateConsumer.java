@@ -9,6 +9,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class OrderUpdateConsumer {
 
@@ -52,6 +53,6 @@ public class OrderUpdateConsumer {
     private void publishPaymentUpdatedEvent(final String orderId, int sleepMultiplier) {
         boolean successful = sleepMultiplier < 9;
         PaymentUpdatedEvent event = new PaymentUpdatedEvent(orderId, successful);
-        kafkaTemplate.send(topicName, event);
+        kafkaTemplate.send(topicName, UUID.randomUUID().toString(), event);
     }
 }

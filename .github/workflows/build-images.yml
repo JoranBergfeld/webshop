@@ -30,7 +30,9 @@ jobs:
           
       - name: Build and push order app container
         run: cd ./order-app && mvn -DskipTests spring-boot:build-image
+        
       - name: Build and push payment app container
         run: cd ./payment-app && mvn -DskipTests spring-boot:build-image
+        
       - name: Build and push stock app container
         run: cd ./stock-app && mvn -DskipTests spring-boot:build-image
