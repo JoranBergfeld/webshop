@@ -24,4 +24,4 @@ payment-app:
   events:
     payment-updated-topic: payment-updated
     order-submitted-topic: order-submitted
-
+    order-failed-topic: order-failed

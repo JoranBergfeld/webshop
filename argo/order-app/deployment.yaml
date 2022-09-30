@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: order-app
-          image: ghcr.io/joranbergfeld/webshop/order-app:idempotency-final
+          image: ghcr.io/joranbergfeld/webshop/order-app:saga
           ports:
             - containerPort: 15000
               protocol: TCP

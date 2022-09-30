@@ -26,5 +26,5 @@ stock-app:
     item-created-topic: item-created
     item-updated-topic: item-updated
     item-deleted-topic: item-deleted
-
+    order-failed-topic: order-failed
 

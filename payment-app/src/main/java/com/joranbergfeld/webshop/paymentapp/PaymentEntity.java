@@ -16,6 +16,14 @@ public class PaymentEntity {
     private String orderId;
     private boolean successful;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getOrderId() {
         return orderId;
     }

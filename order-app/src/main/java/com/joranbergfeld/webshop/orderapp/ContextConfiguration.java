@@ -20,6 +20,11 @@ public class ContextConfiguration {
     }
 
     @Bean
+    NewTopic orderFailedTopic() {
+        return new NewTopic(topicConfiguration.orderFailedTopic(), 1, (short) 1);
+    }
+
+    @Bean
     NewTopic orderSubmittedTopic() {
         return new NewTopic(topicConfiguration.orderSubmittedTopic(), 1, (short) 1);
     }
