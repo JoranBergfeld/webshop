@@ -35,7 +35,7 @@ public class OrderUpdateConsumer {
         publishPaymentUpdatedEvent(orderId, sleepMultiplier);
     }
 
-    @KafkaListener(topics = "${payment-app.events.order-submitted-topic}")
+    @KafkaListener(topics = "${payment-app.events.order-failed-topic}")
     public void orderFailedEventFired(OrderFailedEvent event) {
         Optional<PaymentEntity> byOrderId = repository.findByOrderId(event.orderId());
         if (byOrderId.isEmpty()) {
