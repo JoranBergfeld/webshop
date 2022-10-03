@@ -17,6 +17,7 @@ spec:
       containers:
         - name: stock-app
           image: ghcr.io/joranbergfeld/webshop/stock-app:saga-final
+          imagePullPolicy: Always
           ports:
             - containerPort: 15002
               protocol: TCP
