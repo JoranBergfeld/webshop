@@ -64,7 +64,7 @@ public class OrderUpdateConsumer {
     }
 
     private void publishPaymentUpdatedEvent(final String orderId, int sleepMultiplier) {
-        boolean successful = sleepMultiplier < 9;
+        boolean successful = sleepMultiplier < 3;
         PaymentUpdatedEvent event = new PaymentUpdatedEvent(orderId, successful);
         kafkaTemplate.send(topicName, UUID.randomUUID().toString(), event);
     }
